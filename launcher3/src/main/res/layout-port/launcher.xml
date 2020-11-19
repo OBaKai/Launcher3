@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 继承自FrameLayout -->
+<com.android.launcher3.LauncherRootView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:launcher="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/launcher"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!-- 也是继承自FrameLayout, 主要功能就是处理拖拽事件
+    当你在拖拽一个图标的时候，就是一个view放到了DragLayer里面，跟随你的手在移动。 -->
+    <com.android.launcher3.DragLayer
+        android:id="@+id/drag_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.android.launcher3.FocusIndicatorView
+            android:id="@+id/focus_indicator"
+            android:layout_width="52dp"
+            android:layout_height="52dp" />
+
+        <!-- Workspace是一个用来处理左右滑动的ViewGroup,
+        每一个子页面叫做CellLayout, 负责的是图标和小部件的显示和整齐摆放-->
+        <com.android.launcher3.Workspace
+            android:id="@+id/workspace"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            launcher:defaultScreen="@integer/config_workspaceDefaultScreen"
+            launcher:pageIndicator="@+id/page_indicator">
+        </com.android.launcher3.Workspace>
+
+        <!-- 常用应用放置栏，就是最底下的那个栏 -->
+        <include layout="@layout/hotseat"
+            android:id="@+id/hotseat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- 操作Workspace的时候才会显示
+             有三个按钮“壁纸”，“小部件”和“设置”-->
+        <include layout="@layout/overview_panel"
+            android:id="@+id/overview_panel"
+            android:visibility="gone" />
+
+        <!-- Workspace指示器 -->
+        <include
+            android:id="@+id/page_indicator"
+            layout="@layout/page_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <!-- SearchDropTargetBar 在屏幕最上方的，在我们拖动图标的时候，这个这里会替换成“删除”-->
+        <include
+            android:id="@+id/search_drop_target_bar"
+            layout="@layout/search_drop_target_bar" />
+
+        <include layout="@layout/widgets_view"
+            android:id="@+id/widgets_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
+
+        <include layout="@layout/all_apps"
+            android:id="@+id/apps_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
+    </com.android.launcher3.DragLayer>
+
+    <ViewStub
+        android:id="@+id/launcher_overlay_stub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inflatedId="@+id/launcher_overlay"
+        android:layout="@layout/launcher_overlay" />
+</com.android.launcher3.LauncherRootView>
